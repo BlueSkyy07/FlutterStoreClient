@@ -1,3 +1,4 @@
+import 'package:admin/pages/cart_manager.dart';
 import 'package:admin/pages/cart_page.dart';
 import 'package:admin/pages/cartnow_page.dart';
 import 'package:admin/values/app_assets.dart';
@@ -40,7 +41,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => CartPage(cart: Cart())),
+                  MaterialPageRoute(builder: (_) => CartPage()),
                 );
               },
               child: Image.asset(AppAssets.cart),
@@ -152,6 +153,26 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     },
                     child: Icon(Icons.shopping_cart_checkout_outlined),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add the current product to the cart
+                      CartManager.addToCart(CartItem(
+                        productId: widget.productId,
+                        name: name,
+                        price: price,
+                        imageUrl: imageUrl,
+                      ));
+                      // Optionally, you can show a snackbar or navigate to the cart page
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Product added to cart'),
+                        ),
+                      );
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CartPage()));
+                    },
+                    child: Text('Thêm vào giỏ hàng'),
+                  )
                 ],
               ),
             );

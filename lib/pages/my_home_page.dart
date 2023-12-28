@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => CartPage(cart: Cart())),
+                  MaterialPageRoute(builder: (_) => CartPage()),
                 );
               },
               child: Image.asset(AppAssets.cart),
