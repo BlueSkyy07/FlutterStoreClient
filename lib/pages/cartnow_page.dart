@@ -24,6 +24,7 @@ class _CartNowPageState extends State<CartNowPage> {
   int sl = 1;
   String name = '';
   int price = 0;
+  List<String> docIDs = [];
   void increment() {
     setState(() {
       sl++;
@@ -45,6 +46,35 @@ class _CartNowPageState extends State<CartNowPage> {
     price = widget.price;
   }
 
+  Future<void> _showOrderSuccessDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Đặt hàng thành công'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Cảm ơn bạn đã đặt hàng!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                // Điều hướng về trang trước đó
+                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .pop(); // Đối với trình tự điều hướng của bạn
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future dathang() async {
     thongtin(name, price, sl, (price * sl), _addressController.text.trim(),
         user.email!);
@@ -59,6 +89,7 @@ class _CartNowPageState extends State<CartNowPage> {
       'tongtien': thanhtien,
       'diachi': diachi,
       'email': email,
+      'trangthai': 0
     });
   }
 
@@ -137,7 +168,6 @@ class _CartNowPageState extends State<CartNowPage> {
                   padding: const EdgeInsets.only(left: 8),
                   child: TextField(
                     controller: _addressController,
-                    obscureText: true,
                     decoration: InputDecoration(
                         border: InputBorder.none, hintText: 'Địa chỉ'),
                   ),
@@ -147,6 +177,7 @@ class _CartNowPageState extends State<CartNowPage> {
             ElevatedButton(
                 onPressed: () {
                   dathang();
+                  _showOrderSuccessDialog();
                 },
                 child: Text('Đặt hàng'))
           ],
