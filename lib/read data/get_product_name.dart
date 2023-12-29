@@ -18,7 +18,7 @@ class GetProductName extends StatelessWidget {
               snapshot.data!.data() as Map<String, dynamic>;
           return Text(
             '${data['name']}',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           );
         }
         return Text('loading...');

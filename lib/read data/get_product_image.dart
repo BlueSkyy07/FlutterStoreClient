@@ -23,8 +23,8 @@ class GetProductImage extends StatelessWidget {
           return imageUrl.isNotEmpty
               ? Image.network(
                   imageUrl,
-                  height: 130, // Điều chỉnh độ cao theo ý muốn
-                  width: 150, // Điều chỉnh độ rộng theo ý muốn
+                  height: 100, // Điều chỉnh độ cao theo ý muốn
+                  width: 100, // Điều chỉnh độ rộng theo ý muốn
                   fit: BoxFit.cover,
                 )
               : Text('No image available');

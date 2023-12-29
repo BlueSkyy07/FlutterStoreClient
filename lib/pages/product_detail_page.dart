@@ -1,7 +1,6 @@
 import 'package:admin/pages/cart_manager.dart';
 import 'package:admin/pages/cart_page.dart';
 import 'package:admin/pages/cartnow_page.dart';
-import 'package:admin/values/app_assets.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,27 +29,72 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       appBar: AppBar(
         title: Text('Product Detail'),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        items: [
-          BottomNavigationBarItem(icon: Image.asset(AppAssets.home), label: ''),
-          BottomNavigationBarItem(
-              icon: Image.asset(AppAssets.favorite), label: ''),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => CartPage()),
-                );
-              },
-              child: Image.asset(AppAssets.cart),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(icon: Image.asset(AppAssets.chat), label: ''),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   elevation: 0,
+      //   items: [
+      //     // BottomNavigationBarItem(
+      //     //   icon: GestureDetector(
+      //     //     onTap: () {
+      //     //       Navigator.push(
+      //     //           context,
+      //     //           MaterialPageRoute(
+      //     //               builder: (context) => CartNowPage(
+      //     //                     name: ,
+      //     //                     price: price,
+      //     //                     urlImage: imageUrl,
+      //     //                   )));
+      //     //     },
+      //     //     child: Container(
+      //     //       width: double.infinity,
+      //     //       decoration: BoxDecoration(
+      //     //         color: const Color.fromARGB(255, 255, 123, 0), // Màu cam
+      //     //       ),
+      //     //       child: Column(
+      //     //         children: [
+      //     //           Container(
+      //     //             child: Text(
+      //     //               'Đặt hàng ngay',
+      //     //               style: TextStyle(
+      //     //                   color: Colors.white, fontWeight: FontWeight.bold),
+      //     //             ),
+      //     //           ),
+      //     //           Icon(
+      //     //             Icons.shopping_cart_checkout,
+      //     //             color: Colors.white,
+      //     //           )
+      //     //         ],
+      //     //       ),
+      //     //     ),
+      //     //   ),
+      //     //   label: '',
+      //     // ),
+      //     BottomNavigationBarItem(
+      //       icon: GestureDetector(
+      //           onTap: () {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder: (_) => CartPage()),
+      //             );
+      //           },
+      //           child: Container(
+      //             width: double.infinity,
+      //             decoration: BoxDecoration(color: Colors.green),
+      //             child: Column(
+      //               children: [
+      //                 Container(
+      //                   child: Text(
+      //                     'Thêm vào giỏ hàng',
+      //                     style: TextStyle(fontWeight: FontWeight.bold),
+      //                   ),
+      //                 ),
+      //                 Icon(Icons.add_shopping_cart)
+      //               ],
+      //             ),
+      //           )),
+      //       label: '',
+      //     ),
+      //   ],
+      // ),
       body: FutureBuilder(
         future: products.doc(widget.productId).get(),
         builder: (context, snapshot) {
@@ -140,39 +184,76 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CartNowPage(
-                                    name: name,
-                                    price: price,
-                                    urlImage: imageUrl,
-                                  )));
-                    },
-                    child: Icon(Icons.shopping_cart_checkout_outlined),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add the current product to the cart
-                      CartManager.addToCart(CartItem(
-                        productId: widget.productId,
-                        name: name,
-                        price: price,
-                        imageUrl: imageUrl,
-                      ));
-                      // Optionally, you can show a snackbar or navigate to the cart page
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Product added to cart'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          CartManager.addToCart(CartItem(
+                            productId: widget.productId,
+                            name: name,
+                            price: price,
+                            imageUrl: imageUrl,
+                          ));
+                          // Optionally, you can show a snackbar or navigate to the cart page
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Đã thêm vào giỏ hàng'),
+                            ),
+                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartPage()));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 6, 202, 88),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Column(
+                            children: [
+                              Text('Thêm vào giỏ hàng'),
+                              Icon(Icons.shopping_cart),
+                            ],
+                          ),
                         ),
-                      );
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CartPage()));
-                    },
-                    child: Text('Thêm vào giỏ hàng'),
-                  )
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartNowPage(
+                                        name: name,
+                                        price: price,
+                                        urlImage: imageUrl,
+                                      )));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.amber[800],
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Column(
+                            children: [
+                              Text('Đặt hàng ngay'),
+                              Icon(Icons.shopping_cart_checkout_outlined),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => CartNowPage(
+                  //                   productId: widget.productId,
+                  //                 )));
+                  //   },
+                  //   child: Icon(Icons.shopping_cart_checkout_outlined),
+                  // ),
                 ],
               ),
             );

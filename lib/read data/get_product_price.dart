@@ -19,7 +19,7 @@ class GetProductPrice extends StatelessWidget {
           return Text(
             '${data['price']} VND',
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.red),
+                fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),
           );
         }
         return Text('loading...');

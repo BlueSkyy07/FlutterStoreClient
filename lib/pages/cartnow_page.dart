@@ -21,7 +21,7 @@ class CartNowPage extends StatefulWidget {
 class _CartNowPageState extends State<CartNowPage> {
   final user = FirebaseAuth.instance.currentUser!;
   final _addressController = TextEditingController();
-  int sl = 0;
+  int sl = 1;
   String name = '';
   int price = 0;
   void increment() {
@@ -75,72 +75,60 @@ class _CartNowPageState extends State<CartNowPage> {
       appBar: AppBar(
         title: Text('Cart Now'),
       ),
-      body: Center(
-          child: Column(
-        children: [
-          Container(
-            child: Image.network(
-              widget.urlImage,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Image.network(
+                widget.urlImage,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: 'Name: ',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: '${widget.name}',
-                style: TextStyle(fontSize: 18, color: Colors.black))
-          ])),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: 'Price: ',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: '${widget.price}',
-                style: TextStyle(fontSize: 18, color: Colors.black))
-          ])),
-          Container(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Số lượng:  ',
-                style: TextStyle(fontSize: 20),
-              ),
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: decrement,
-              ),
-              SizedBox(height: 20),
-              Text(
-                '$sl',
-                style: TextStyle(fontSize: 20),
-              ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: increment,
-              ),
-            ],
-          )),
-          Text(
-            'Địa chỉ giao hàng: ',
-            style: TextStyle(fontSize: 18),
-          ),
-          // Text(user.email!),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Container(
+            SizedBox(height: 20),
+
+            Text('${widget.name}',
+                style: TextStyle(fontSize: 20, color: Colors.black)),
+            SizedBox(height: 10),
+
+            Text('${widget.price} VND',
+                style: TextStyle(fontSize: 16, color: Colors.red)),
+            Container(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Số lượng:  ',
+                  style: TextStyle(fontSize: 20),
+                ),
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  onPressed: decrement,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  '$sl',
+                  style: TextStyle(fontSize: 20),
+                ),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: increment,
+                ),
+              ],
+            )),
+            SizedBox(height: 10),
+
+            Text(
+              'Địa chỉ giao hàng: ',
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 20),
+
+            // Text(user.email!),
+            Container(
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
                     border: Border.all(color: Colors.white),
@@ -154,14 +142,16 @@ class _CartNowPageState extends State<CartNowPage> {
                         border: InputBorder.none, hintText: 'Địa chỉ'),
                   ),
                 )),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                dathang();
-              },
-              child: Text('Đặt hàng'))
-        ],
-      )),
+            SizedBox(height: 20),
+
+            ElevatedButton(
+                onPressed: () {
+                  dathang();
+                },
+                child: Text('Đặt hàng'))
+          ],
+        ),
+      ),
     );
   }
 }

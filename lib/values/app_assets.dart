@@ -1,6 +1,9 @@
 class AppAssets {
   static final String imagePath = 'assets/images/bottomIcon/';
   static final String home = imagePath + 'home.png';
+  static final String home1 = imagePath + 'icon.png';
+  static final String home1x = imagePath + 'icon(1).png';
+
   static final String favorite = imagePath + 'favorite.png';
   static final String chat = imagePath + 'chat.png';
   static final String cart = imagePath + 'cart.png';
